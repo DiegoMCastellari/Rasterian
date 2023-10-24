@@ -1,4 +1,9 @@
 import rasterio
+# from rasterio.plot import show
+
+""" def plot_raster(raster_path, cmap='terrain'):
+    raster = rasterio.open(raster_path)
+    show((raster, 3), cmap=cmap) """
 
 def get_meta(raster):
     with rasterio.open(raster) as src0:
