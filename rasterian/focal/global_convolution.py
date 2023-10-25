@@ -1,42 +1,39 @@
-def conv_3x3_mean(band, N):
-    band_1 = band[0]
-    len_array = len(band_1)
-    img_conv = []
+import numpy as np
+from scipy.signal import convolve # correlate
 
-    for c in range(len_array):
-        if c == 0:
-            conv_1 = np.convolve(band_1[c], np.ones(N), mode='same')
-            conv_2 = np.convolve(band_1[c+1], np.ones(N), mode='same')
-            conv = (conv_1 + conv_2) /6
-        elif c == (len_array-1):
-            conv_0 = np.convolve(band_1[c-1], np.ones(N), mode='same')
-            conv_1 = np.convolve(band_1[c], np.ones(N), mode='same')
-            conv = (conv_0 + conv_1) /6
-        else:
-            conv_0 = np.convolve(band_1[c-1], np.ones(N), mode='same')
-            conv_1 = np.convolve(band_1[c], np.ones(N), mode='same')
-            conv_2 = np.convolve(band_1[c+1], np.ones(N), mode='same')
-            conv = (conv_0 + conv_1 + conv_2) / 9
-        
-        img_conv.append(conv)
-    img_conv = np.array([img_conv]).round(2)
-    return img_conv
+def conv_media(image, n):
+    matrix_ones = np.ones((n, n))
+    img_conv = convolve(image, matrix_ones, mode='same')
 
-def create_convolution_band (path_image, output_folder_path):
+    image_ones = np.ones(image.shape) 
+    img_conv_ones = convolve(image_ones, matrix_ones, mode='same')
 
-    opened_img = rasterio.open(path_image)
-    image = opened_img.read()
+    result = img_conv / img_conv_ones
+    return result
 
-    meta = opened_img.meta
-    meta.update(count = 1, driver='GTiff')
-    meta.update(dtype=rasterio.float32)
+def conv_matrix(image, matrix):
+    matrix = np.array(matrix)
+    img_conv = convolve(image, matrix, mode='same')
 
-    for i in range(len(image)): 
+    matrix_ones = np.ones(matrix.shape)
+    image_ones = np.ones(image.shape)
+    img_conv_ones = convolve(image_ones, matrix_ones, mode='same')
 
-        band_conv = conv_3x3_mean(np.array([image[0]]), 3)
+    result = img_conv / img_conv_ones
+    return result
 
-        with rasterio.open(output_folder_path+"convoolution_"+str(i)+".tif", 'w', **meta) as dst:
-            dst.write(band_conv.astype(rasterio.float32))
-    
-    opened_img.close()
-    dst.close()
+def conv_image(image, matrix_n):
+    band_list = []
+    if type(matrix_n) == list:
+        for b in range(len(image)):
+            img = conv_matrix(image[b], matrix_n)
+            band_list.append(img)
+    elif type(matrix_n) == int:
+        for b in range(len(image)):
+            img = conv_media(image[b], matrix_n)
+            band_list.append(img)
+    else:
+        print("Posible matrix_n values types: list or int.-")
+
+    raster_stacked = np.stack(band_list, axis=0)
+    return raster_stacked
