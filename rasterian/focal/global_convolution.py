@@ -1,22 +1,22 @@
 import numpy as np
 from scipy.signal import convolve # correlate
 
-def conv_media(image, n):
+def conv_media(band, n):
     matrix_ones = np.ones((n, n))
-    img_conv = convolve(image, matrix_ones, mode='same')
+    img_conv = convolve(band, matrix_ones, mode='same')
 
-    image_ones = np.ones(image.shape) 
+    image_ones = np.ones(band.shape) 
     img_conv_ones = convolve(image_ones, matrix_ones, mode='same')
 
     result = img_conv / img_conv_ones
     return result
 
-def conv_matrix(image, matrix):
+def conv_matrix(band, matrix):
     matrix = np.array(matrix)
-    img_conv = convolve(image, matrix, mode='same')
+    img_conv = convolve(band, matrix, mode='same')
 
     matrix_ones = np.ones(matrix.shape)
-    image_ones = np.ones(image.shape)
+    image_ones = np.ones(band.shape)
     img_conv_ones = convolve(image_ones, matrix_ones, mode='same')
 
     result = img_conv / img_conv_ones
