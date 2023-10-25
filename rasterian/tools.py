@@ -1,3 +1,4 @@
+import pandas as pd
 import rasterio
 # from rasterio.plot import show
 
@@ -19,3 +20,21 @@ def raster_to_file(image, meta, output_image):
         for id, layer in enumerate(image, start=1):
             dst.write_band(id, layer)
     dst.close()
+
+
+### DATA FRAME TRANSFORMATION
+def gdf_to_image_array(gdf_data, output_shape):
+    shape_size = output_shape[0] * output_shape[1] * output_shape[2]
+    gdf_size = len(gdf_data) * len(gdf_data.columns)
+
+    if (shape_size == gdf_size):
+        array_sample = gdf_data.to_numpy()
+        array_sample_reshaped = array_sample.reshape(output_shape[0], output_shape[1], output_shape[2])
+        return array_sample_reshaped
+    else:
+        print(f"ERROR: shape size ({shape_size}) is not equal to gdf size ({gdf_size}).-")
+
+
+def image_array_to_gdf(image):
+    gdf_from_array = pd.DataFrame(image.reshape(image.shape[1] * image.shape[2], image.shape[0]))
+    return gdf_from_array
