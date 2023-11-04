@@ -41,9 +41,9 @@ def scale_intensity(image, correction_type):
     if correction_type == 'rescale_intensity':
         img_rescale = rescale_intensity(image)
     elif correction_type == 'equalize_hist':
-        img_rescale = rescale_intensity(image)
+        img_rescale = equalize_hist(image)
     elif correction_type == 'equalize_adapthist':
-        img_rescale = rescale_intensity(image)
+        img_rescale = equalize_adapthist(image)
     else:
         print('Posible values: rescale_intensity, equalize_hist or equalize_adapthist')
     return img_rescale
