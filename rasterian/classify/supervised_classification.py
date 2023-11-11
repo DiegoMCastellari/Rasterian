@@ -23,16 +23,16 @@ def select_class_to_predict(df_samples, class_name):
     df_samples.loc[df_samples['class']==class_name, 'class'] = 1
     return df_samples
 
-def prepare_df_sample(df_samples, class_type, class_name):
+def prepare_df_sample(df_samples, class_type, class_name=None):
     df_samples_clean = clean_samples(df_samples)
     if class_type == 'bool':
         if class_name in list(df_samples_clean['class'].unique()):
             df_samples_class = select_class_to_predict(df_samples_clean, class_name)
             return df_samples_class
         else:
-            print(f"Class {class_name} nos in dataset class values.-")
+            print(f"Class {class_name} not in dataset class values.-")
     elif class_type == 'map':
-        df_samples_class = select_class_to_predict(df_samples_clean, class_name)
+        df_samples_class = map_classes_to_id(df_samples_clean)
         return df_samples_class
     else:
         print("Posible class_type values: 'bool' or 'map'.-")
@@ -69,13 +69,18 @@ def search_model(df_samples, model_name, params_search):
     for k in range(params_search):                      
         train_model(X_train, X_test, y_train, y_test, model_name, k)
 
-def predict_model(df_samples, model_name, params_list):
+
+# **********************************************************************************
+
+def predict_model(df_band, df_samples, model_name, params_list):
     X = df_samples.drop(columns='class')
     y = df_samples.loc[:,'class']
 
     model = train_model(X, X, y, y, model_name, params_list)
-    y_pred_model = model.predict(X)
-    df_samples['clase'] = y_pred_model
+    y_pred_model = model.predict(df_band)
+    df_band['clase'] = y_pred_model
+
+    return df_band
 
 
 """ def save_classifiedraster():
