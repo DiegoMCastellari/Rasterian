@@ -6,7 +6,7 @@ import rasterio
 from rasterio.mask import mask
 from ..tools import image_array_to_gdf
 
-def getFeatures(gdf):
+def get_features(gdf):
     """Function to parse features from GeoDataFrame in such a manner that rasterio wants them"""
     import json
     return [json.loads(gdf.to_json())['features'][0]['geometry']]
@@ -19,11 +19,11 @@ def create_bbox_polygon(gdf_poly, output_crs):
     gdf_bbox = gpd.GeoDataFrame({'geometry': bbox}, index=[0], crs=output_crs)
     return gdf_bbox
 
-def clip_raster_by_polygon(raster, gdf_poly):
-    bbox_coords = getFeatures(gdf_poly)
-    out_img, out_transform = mask(raster, shapes=bbox_coords, crop=True)
+def clip_raster_by_polygon(image, gdf_poly):
+    bbox_coords = get_features(gdf_poly)
+    out_img, out_transform = mask(image, shapes=bbox_coords, crop=True)
     
-    out_meta = raster.meta.copy()
+    out_meta = image.meta.copy()
     out_meta.update({
         "driver": "GTiff",
         "height": out_img.shape[1],

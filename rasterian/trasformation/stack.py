@@ -4,9 +4,9 @@ import rasterio
 from scale_intensity_correction import scale_intensity
 
 # Create stacked
-def stack_bands(raster_list):
+def stack_bands(raster_path_list):
     band_list = []
-    for id, layer in enumerate(raster_list, start=1):
+    for id, layer in enumerate(raster_path_list, start=1):
         with rasterio.open(layer) as src1:
             img = src1.read(1)
             band_list.append(img)
