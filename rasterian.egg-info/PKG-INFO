@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: rasterian
+Version: 0.0.1
+Summary: Rasterian - Raster Analysis Package
+Author: Diego M Castellari
+Author-email: <diegomcastellari@gmail.com>
+Keywords: python,raster,analysis,satellite,remote sensing
+Classifier: Development Status :: 1 - Planning
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: Microsoft :: Windows
+Description-Content-Type: text/markdown
+Requires-Dist: geopandas==0.14.0
+Requires-Dist: matplotlib==3.8.0
+Requires-Dist: numpy==1.26.1
+Requires-Dist: pandas==2.1.1
+Requires-Dist: rasterio==1.3.9
+Requires-Dist: scikit_learn==1.3.2
+Requires-Dist: scikit-image==0.22.0

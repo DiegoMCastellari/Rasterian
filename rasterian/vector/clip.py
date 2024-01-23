@@ -4,7 +4,7 @@ from shapely.geometry import box
 from fiona.crs import from_epsg
 import rasterio 
 from rasterio.mask import mask
-from ..tools import image_array_to_gdf
+from ..tools import image_to_gdf
 
 def get_features(gdf):
     """Function to parse features from GeoDataFrame in such a manner that rasterio wants them"""
@@ -66,7 +66,7 @@ def create_raster_samples_gdf(raster_path, gdf_polys):
         gdf_bbox = create_bbox_polygon(gdf_polys.iloc[[i]], raster_crs)
         out_img, out_meta = clip_raster_by_polygon(raster, gdf_bbox)
 
-        gdf_sample = image_array_to_gdf(out_img)
+        gdf_sample = image_to_gdf(out_img)
         gdf_sample['class'] = poly_class
         gdf_sample['img_id'] = poly_id
         if len(gdf_output) == 0:

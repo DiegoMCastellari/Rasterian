@@ -1,10 +1,10 @@
-from classify import *
-from focal import *
-from plot_img import *
-from trasformation import *
-from vector import *
+from . import tools 
 
-from tools import *
+from . import classify
+from . import focal
+from . import plot_img 
+from . import trasformation 
+from . import vector 
 
 __all__ = [
     "classify",

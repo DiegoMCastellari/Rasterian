@@ -1,5 +1,5 @@
 import numpy as np
-from local_math import  *
+from .local_math import *
 
 sat_message = "Posible satelite values: landsat_7, landsat_8 or sentinel_2.-"
 

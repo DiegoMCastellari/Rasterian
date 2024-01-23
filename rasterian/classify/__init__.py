@@ -1,5 +1,5 @@
-from statistic_classification import *
-from supervised_classification import *
+from . import statistic_classification
+from . import supervised_classification
 
 __all__ = [
     "statistic_classification",

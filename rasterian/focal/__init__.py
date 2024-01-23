@@ -1,6 +1,6 @@
-from global_convolution import *
-from local_indexes import *
-from local_math import *
+from . import global_convolution
+from . import local_indexes 
+from . import local_math 
 
 __all__ = [
     "global_convolution",

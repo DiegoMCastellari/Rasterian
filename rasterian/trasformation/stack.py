@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import rasterio
-from scale_intensity_correction import scale_intensity
+from .scale_intensity_correction import scale_intensity
 
 # Create stacked
 def stack_bands(raster_path_list):

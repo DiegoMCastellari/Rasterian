@@ -1,5 +1,5 @@
-from clip import *
-from transformation import *
+from . import clip
+from . import transformation 
 
 __all__ = [
     "clip",
