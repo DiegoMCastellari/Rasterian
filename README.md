@@ -25,8 +25,8 @@ pip install rasterian-0.0.1.tar.gz
 
 # Examples of use
 Into the examples folder, there are some examples of use:    
-- 01 - How to stack bands into one image
-- 02 - How apply filters
+- 01 - How to stack bands in one unique raster
+- 02 - How to apply filters
 - 03 - How to calculate indexes
 
        
