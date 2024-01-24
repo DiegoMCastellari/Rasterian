@@ -2,6 +2,7 @@ import os
 import numpy as np
 import rasterio
 from .scale_intensity_correction import scale_intensity
+from ..tools import get_meta
 
 # Create stacked
 def stack_bands(raster_path_list):
@@ -22,7 +23,11 @@ def create_stacked_raster(band_rasters_folder_dir):
     print(raster_list)
     # Create stacked
     raster = stack_bands(raster_list)
-    return raster
+
+    raster_meta  = get_meta(raster_list[0])
+    raster_meta.update(count = len(raster_list))
+
+    return raster, raster_meta
 
 def stack_new_bands_to_raster(original_image, new_image_bands):
     band_list = []

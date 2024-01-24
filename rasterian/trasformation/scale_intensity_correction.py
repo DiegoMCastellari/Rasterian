@@ -6,10 +6,10 @@ def rescale_intensity(image):
     image_bands = len(image)
     band_list = []
     for img in range(image_bands):
-        p2, p98 = np.percentile(img, (2, 98))
-        img[img <= p2] = p2
-        img[img >= p98] = p98
-        img_rescale = exposure.rescale_intensity(img, in_range=(p2, p98))
+        p2, p98 = np.percentile(image[img], (2, 98))
+        image[img][image[img] <= p2] = p2
+        image[img][image[img] >= p98] = p98
+        img_rescale = exposure.rescale_intensity(image[img], in_range=(p2, p98))
         band_list.append(img_rescale)
     raster_stacked = np.stack(band_list, axis=0)
     return raster_stacked
@@ -19,10 +19,10 @@ def equalize_hist(image):
     image_bands = len(image)
     band_list = []
     for img in range(image_bands):
-        p2, p98 = np.percentile(img, (2, 98))
-        img[img <= p2] = p2
-        img[img >= p98] = p98
-        img_rescale = exposure.equalize_hist(img) * 255
+        p2, p98 = np.percentile(image[img], (2, 98))
+        image[img][image[img] <= p2] = p2
+        image[img][image[img] >= p98] = p98
+        img_rescale = exposure.equalize_hist(image[img]) * 255
         band_list.append(img_rescale)
     raster_stacked = np.stack(band_list, axis=0)
     return raster_stacked
