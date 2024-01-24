@@ -19,7 +19,9 @@ Raster data can be read from and saved to files; but all the processing use and 
 # Installation
 Download the rasterian-0.0.1.tar.gz file in the dist folder.    
 Into the python enviroment, run:     
-        pip install rasterian-0.0.1.tar.gz
+```python 
+pip install rasterian-0.0.1.tar.gz
+```
 
 # Examples of use
 Into the examples folder, there are some examples of use:    
